@@ -1,34 +1,31 @@
-import { Injectable } from '@nestjs/common';
-import { User } from "./interfaces/user.interface";
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { UserEntity } from './users.entity';
 
 @Injectable()
 export class UsersService {
-    private users: User[] = [
-        {
-            "id": 1,
-            "name": "Jordi",
-            "email": "jordicantogalvez@gmail.com",
-            "password": "lespaul"
-        },
-        {
-            "id": 2,
-            "name": "Josete",
-            "email": "jordicantogalvez@gmail.com",
-            "password": "lespaul"
-        },
-        {
-            "id": 3,
-            "name": "Pablo",
-            "email": "jordicantogalvez@gmail.com",
-            "password": "lespaul"
-        }                
-    ];
 
-    findOne(id: number): User {
-        return this.users.find(user => user.id === id);
+    constructor(
+        @InjectRepository(UserEntity)
+        private readonly userRepository: Repository<UserEntity>
+    ){}
+
+    async findOne(id: number): Promise<UserEntity>  {
+        const user: UserEntity = await this.userRepository.findOne(id);
+
+        if (!user) {
+            throw new NotFoundException();
+        }
+        return user;
     }
 
-    findAll(): User[] {
-        return this.users;
+    async findAll(): Promise<UserEntity[]> {
+        const users: UserEntity[] = await this.userRepository.find();
+
+        if (!users) {
+            throw new NotFoundException();
+        }
+        return users;
     }
 }

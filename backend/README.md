@@ -71,3 +71,34 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](LICENSE).
+
+
+## Config Database
+
+https://medium.com/tech-learn-share/docker-mysql-access-denied-for-user-172-17-0-1-using-password-yes-c5eadad582d3
+
+$ docker exec -it <ID_CONTAINER>  mysql -uroot -p
+Enter password:
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 9
+Server version: 5.7.36 MySQL Community Server (GPL)
+
+Copyright (c) 2000, 2021, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> CREATE USER 'root'@'172.18.0.1' IDENTIFIED BY 'password';
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> GRANT ALL PRIVILEGES ON *.* TO 'root'@'172.18.0.1' WITH GRANT OPTION;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> flush privileges;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> exit
+Bye

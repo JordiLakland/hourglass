@@ -1,0 +1,16 @@
+
+version: '1.3'
+services:
+  database:
+    image: mysql:8.0.27
+    command: --default-authentication-plugin=mysql_native_password
+    volumes:
+      - "./.mysql-data/db:/var/lib/mysql"
+    restart: always
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: hourGlass_db
+      MYSQL_USER: hourGlassUser_db
+      MYSQL_PASSWORD: hourGlassPass_db

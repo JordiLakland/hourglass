@@ -1,26 +1,40 @@
-import { Body, Controller, Get, HttpCode, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, Param, Post, Put } from '@nestjs/common';
 import { CreateUserDto } from "./dto/create-user.dto";
 import { UsersService } from "./users.service";
-import { User } from "./interfaces/user.interface";
+import { UserEntity } from './users.entity';
 
 @Controller('users')
 export class UsersController {
 
-    constructor(private usersService: UsersService) {};
+    constructor(
+        private usersService: UsersService
+    ) {};
 
     @Get(':id')
-    findOne(@Param('id') id: string): User {
-        return this.usersService.findOne(parseInt(id));
+    async findOne(@Param('id') id: string) {
+        const data: UserEntity = await this.usersService.findOne(parseInt(id));
+        return {
+            message: 'Usuario existente',
+            data: data
+        }
     } 
 
     @Get()
-    findAll(): User[] {
-        return this.usersService.findAll();
+    async findAll() {
+        const data: UserEntity[] = await this.usersService.findAll();
+        return {
+            message: 'Petición correcta',
+            data: data
+        }
     }
 
     @Post()
-    createUser(@Body() createUserDto: CreateUserDto): string {
-        console.log(createUserDto.name, createUserDto.email);
-        return 'User Created';
+    createOne(userData: CreateUserDto): Object {
+        return {ok: 'createOne'};
+    }
+
+    @Put(':id')
+    updateOne(@Param('id')id: string, user: CreateUserDto): Object {
+        return {ok: 'updated'};
     }
 }

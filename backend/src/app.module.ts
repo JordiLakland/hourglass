@@ -3,10 +3,19 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
-import  config from "../ormconfig";
 
 @Module({
-  imports: [TypeOrmModule.forRoot(config), UsersModule],
+  imports: [TypeOrmModule.forRoot({
+    type: 'mysql',
+    host: 'localhost',
+    port: 3306,
+    username: 'hourGlassUser_db',
+    password: 'hourGlassPass_db',
+    database: 'hourGlass_db',
+    entities: [__dirname + "./**/**/*.entity{.ts,.js}"],
+    autoLoadEntities: true,
+    synchronize: true,
+  }), UsersModule],
   controllers: [AppController],
   providers: [AppService],
 })
