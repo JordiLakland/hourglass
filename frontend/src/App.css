@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@400;500;700&family=Poppins:wght@400;500;600&display=swap');
+
 
 * {
     box-sizing: border-box;
@@ -9,5 +9,9 @@
 .App {
     margin: 0;
     color: #222;
-    font-family: 'Poppins', sans-serif;
+}
+
+.main-content {
+    display: flex;
+    justify-content: space-evenly;
 }

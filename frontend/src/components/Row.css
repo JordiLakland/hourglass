@@ -1,0 +1,9 @@
+
+.projects-selector {
+    display: flex;
+    
+}
+
+.projects-selector button {
+    margin-left: 3px;
+}
